@@ -8,9 +8,8 @@ export function LogoScraper() {
     if (url) {
       const timer = setTimeout(() => {
         fetchLogo(url);
-      }, 1000); // Délais de 1 seconde
+      }, 1000);
 
-      // Nettoyer le timeout si l'URL change avant la fin du délai
       return () => clearTimeout(timer);
     }
   }, [url]);
@@ -20,7 +19,7 @@ export function LogoScraper() {
   };
 
   const fetchLogo = async (url) => {
-    const apiKey = '9f1a5617-f5a6-4771-adcc-0e83c6186e1d'; // Remplacez par votre clé API
+    const apiKey = '9f1a5617-f5a6-4771-adcc-0e83c6186e1d';
 
     try {
       const response = await fetch(`https://opengraph.io/api/1.1/site/${encodeURIComponent(url)}?app_id=${apiKey}`);
@@ -28,12 +27,9 @@ export function LogoScraper() {
 
       console.log('Data:', data);
 
-      // Récupération de l'URL du logo depuis les données récupérées
       const retrievedLogoUrl = data.hybridGraph.favicon;
       const retrievedLogoUrl2 = data.hybridGraph.image;
-      // Selon la structure des données retournées
 
-      // Mise à jour de l'URL du logo dans l'état pour l'afficher
       if (retrievedLogoUrl) {
         setLogoUrl(retrievedLogoUrl);
       } else if (retrievedLogoUrl2) {
@@ -43,7 +39,7 @@ export function LogoScraper() {
       }
     } catch (error) {
       console.error('Error fetching logo:', error);
-      // Gestion des erreurs
+
       setLogoUrl('');
     }
   };
